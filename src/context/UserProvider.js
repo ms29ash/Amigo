@@ -18,13 +18,15 @@ const UserProvider = ({ children }) => {
     const cookies = new Cookies();
     let { pathname } = useLocation();
 
-    console.log(pathname);
 
-
-    const fetchUser = async (headers) => {
+    const fetchUser = async (token) => {
         try {
+            const headers = {
+                'Authorization': `Bearer ${token}`
+            };
             const data = await axios.get('/user/userdata', { headers })
-            setUser(data?.data?.user)
+            let user = data?.data?.user;
+            setUser({ ...user, token })
             setLoading(false)
             if (pathname !== '/') {
                 navigate('/', { replace: true })
@@ -43,11 +45,9 @@ const UserProvider = ({ children }) => {
             }
         } else {
             let token = cookies.get('token');
-            const headers = {
-                'Authorization': `Bearer ${token}`
-            };
-
-            fetchUser(headers)
+            if (token) {
+                fetchUser(token)
+            }
 
         }
     }, [])

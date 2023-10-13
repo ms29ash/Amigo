@@ -29,7 +29,6 @@ function Login() {
 
     //Form Submit hanlder
     const onSubmit = (data) => {
-        console.log(data);
         mutate(data, {
             onSuccess: (data) => {
                 reset();

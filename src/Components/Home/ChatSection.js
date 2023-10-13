@@ -7,12 +7,12 @@ function Chat() {
             {Array(3)
                 .fill("")
                 .map((i, n) => {
-                    return <Msg receive={true} />;
+                    return <Msg key={n} receive={true} />;
                 })}
             {Array(3)
                 .fill("")
                 .map((i, n) => {
-                    return <Msg receive={false} />;
+                    return <Msg key={n * 2} receive={false} />;
                 })}
         </ScrollableFeed>
     );
