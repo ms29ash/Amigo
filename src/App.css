@@ -18,3 +18,21 @@ html,body{
   
   background: #555; 
 } 
+
+
+
+.pattern{
+    position: relative;
+}
+.pattern::after {
+    content:"";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    opacity: 0.2;
+  background: #303336b1 url('pattern.png') no-repeat center center fixed;
+  background-size: cover;
+  background-blend-mode: overlay;
+}
