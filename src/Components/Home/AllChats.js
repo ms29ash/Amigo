@@ -2,8 +2,19 @@ import React from "react";
 import { BsThreeDots } from "react-icons/bs";
 import Search from "./Search";
 import SingleChat from "./SingleChat";
+import { useQuery } from '@tanstack/react-query'
+import axios from "axios";
 
 function AllChats() {
+
+    const fetchUsers = () => axios.get('/api/chat/chats')
+
+    const { isPending, isError, data, error } = useQuery({
+        queryKey: ['todos'],
+        queryFn: fetchUsers,
+    })
+
+    console.log(data);
     return (
         <div className="flex-1 bg-gray h-screen overflow-y-hidden max-h-screen ">
             <div className="p-4">
