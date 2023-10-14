@@ -2,12 +2,20 @@ import React from "react";
 import TimeDifference from "../../utitlity/TimeDiff";
 import NotificationBadge from "../../utitlity/NotificationBadge";
 import { ChatState } from "../../context/ChatProvider";
+import { getSenderName } from "../../Logics/ChatLogis";
+import { UserState } from "../../context/UserProvider";
 
 function SingleChat({ chat }) {
-  const {setSelectedChat} = ChatState()
+  const { setSelectedChat } = ChatState();
+  const { user } = UserState();
   return (
     <>
-      <div onClick={()=>{setSelectedChat(chat)}} className="flex   cursor-pointer hover:text-black px-4 py-3 hover:bg-green  items-center group w-full relative  max-w-full">
+      <div
+        onClick={() => {
+          setSelectedChat(chat);
+        }}
+        className="flex   cursor-pointer hover:text-black px-4 py-3 hover:bg-green  items-center group w-full relative  max-w-full"
+      >
         <img
           className=" mr-3 w-[60px] h-[60px] rounded-full "
           src="https://med.gov.bz/wp-content/uploads/2020/08/dummy-profile-pic.jpg"
@@ -17,7 +25,8 @@ function SingleChat({ chat }) {
         <div className=" relative w-[70%] flex flex-row items-center ">
           <div className="  flex  w-[70%]    flex-col  justify-between overflow-x-hidden ">
             <h2 className="font-bold text-xl whitespace-nowrap capitalize ">
-              {chat.chatName}
+              {/* {chat.chatName} */}
+              {getSenderName(chat?.users, user)}
             </h2>
 
             <p className="  truncate">{chat?.latestMsg?.content}</p>

@@ -12,10 +12,10 @@ function ChatBox() {
         <>
             {selectedChat ? <div className="flex-[3_3_0%] w-full h-screen max-h-screen  overflow-y-hidden flex flex-col ">
                 <ChatBoxHeader selectedChat={selectedChat}  />
-                <div className="flex-1  overflow-y-auto">
+                <div className="flex-1 flex  overflow-y-auto">
                     <ChatSection />
                 </div>
-                <WriteMsg />
+                <WriteMsg selectedChat={selectedChat}  />
             </div> :
                 <div className="flex-[3_3_0%] w-full h-screen max-h-screen  overflow-y-hidden flex flex-col" >
 
