@@ -1,12 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useState, createContext } from "react";
 import { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import axios from '../axios'
 
-
-const { createContext } = require("react");
 
 
 const UserContext = createContext()

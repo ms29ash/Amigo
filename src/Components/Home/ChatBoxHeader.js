@@ -1,6 +1,6 @@
 import { BsThreeDots } from "react-icons/bs";
 
-function ChatBoxHeader() {
+function ChatBoxHeader({selectedChat}) {
     return (
         <div className="bg-lightGray px-6 ">
             <div className="flex items-center justify-between">
@@ -11,8 +11,8 @@ function ChatBoxHeader() {
                         alt=""
                     />
                     <div className="flex-1">
-                        <h2 className="font-bold text-xl flex-1 whitespace-nowrap ">
-                            Rohit Sharma
+                        <h2 className="font-bold text-xl flex-1 whitespace-nowrap capitalize ">
+                            {selectedChat?.chatName}
                         </h2>
                         <p className="flex-1">Rohit is in form today!! </p>
                     </div>

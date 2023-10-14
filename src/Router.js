@@ -4,10 +4,17 @@ import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
 import UserProvider from "./context/UserProvider";
+import ChatProvider from "./context/ChatProvider";
 
 const router = createBrowserRouter([
     {
-        element: <UserProvider><Outlet /> </UserProvider>,
+        element: <>
+            <UserProvider>
+                <ChatProvider>
+                    <Outlet />
+                </ChatProvider>
+            </UserProvider>
+        </>,
         children: [
 
             {
