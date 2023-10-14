@@ -9,14 +9,14 @@ function Msg({ msg }) {
       {user._id === msg.sender._id ? (
         <SendContainer $type={true}>
           <SendWrapper $type={true}>
-            <p>{msg?.content}</p>
+            <Text>{msg?.content}</Text>
             <Small>2:00 pm</Small>
           </SendWrapper>
         </SendContainer>
       ) : (
         <ReceiveContainer $type={true}>
           <ReceiveWrapper $type={true}>
-            <p>{msg?.content}</p>
+            <Text>{msg?.content}</Text>
             <Small>2:00 pm</Small>
           </ReceiveWrapper>
         </ReceiveContainer>
@@ -28,9 +28,10 @@ function Msg({ msg }) {
 export default Msg;
 
 const Container = tw.div`flex my-3  `;
-const Wrapper = tw.div`max-w-[300px] p-4 rounded-xl rounded-br-none mx-3 `;
-const Small = tw.small`flex justify-end text-xs mt-2 `;
+const Wrapper = tw.div`max-w-[300px] py-2 px-4  mx-3 rounded-xl `;
+const Text = tw.p`pr-12`;
+const Small = tw.small`flex justify-end text-xs opacity-60 font-bold `;
 const SendContainer = tw(Container)`  justify-end `;
-const ReceiveContainer = tw(Container)` justify-start} `;
-const ReceiveWrapper = tw(Wrapper)` bg-gray text-white `;
-const SendWrapper = tw(Wrapper)`bg-green text-black `;
+const ReceiveContainer = tw(Container)` justify-start `;
+const ReceiveWrapper = tw(Wrapper)` bg-gray text-white  rounded-bl-none`;
+const SendWrapper = tw(Wrapper)`bg-green text-black  rounded-br-none `;
