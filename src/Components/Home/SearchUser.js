@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import axios from '../../axios';
 
 
-function SearchUser({ data }) {
+function SearchUser({ data, setKeyword, setActive }) {
     const { user } = UserState()
     const headers = {
         'Authorization': `Bearer ${user.token}`
@@ -23,7 +23,8 @@ function SearchUser({ data }) {
         }
         mutate(newData, {
             onSuccess: (data) => {
-                console.log(data);
+                setKeyword('')
+                setActive(false)
             }, onError: (error) => {
                 console.log(error);
             },

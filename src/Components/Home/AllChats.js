@@ -54,7 +54,7 @@ function AllChats() {
                 </div>
                 <div className="overflow-y-auto overflow-x-hidden h-full w-full pb-48  ">
                     {
-                        active ? <SearchResults data={chats} error={chatError} /> :
+                        active ? <SearchResults data={chats} error={chatError} setKeyword={setKeyword} setActive={setActive} /> :
                             <>
                                 {data?.data?.chats
                                     .map((chat) => {
