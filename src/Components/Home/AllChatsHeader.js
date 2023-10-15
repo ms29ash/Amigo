@@ -3,9 +3,10 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import { IoMdArrowBack, IoMdNotificationsOutline } from "react-icons/io";
 import { UserState } from "../../context/UserProvider";
+import tw from "tailwind-styled-components";
 
 function AllChatsHeader() {
-  const { user, tab, setTab } = UserState();
+  const { logout, tab, setTab } = UserState();
   return (
     <div className="py-4">
       <div className="flex justify-between items-center p-4 ">
@@ -27,19 +28,19 @@ function AllChatsHeader() {
             className=" hover:bg-green  hover:text-black cursor-pointer rounded-full p-1 text-3xl"
             onClick={() => setTab("notification")}
           />
-          <BsThreeDots className="rotate-90 hover:bg-green  hover:text-black cursor-pointer rounded-full p-1 text-3xl" />
+          <div className="relative group">
+            <BsThreeDots className="rotate-90 hover:bg-green  hover:text-black cursor-pointer rounded-full p-1 text-3xl " />
+            <div className="absolute bg-lightGray whitespace-nowrap right-0 shadow-opt z-40 hidden group-hover:block  ">
+              <Opt>Profile</Opt>
+              <Opt onClick={logout}>Log Out</Opt>
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* <SearchBox
-            refetch={refetch}
-            keyword={keyword}
-            setKeyword={setKeyword}
-            active={active}
-            setActive={setActive}
-          /> */}
     </div>
   );
 }
 
 export default AllChatsHeader;
+
+const Opt = tw.p`px-12  hover:bg-black cursor-pointer py-5`;

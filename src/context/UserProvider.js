@@ -50,8 +50,14 @@ const UserProvider = ({ children }) => {
     }
   }, [pathname]);
 
+  const logout = () => {
+    setUser(null);
+    cookies.remove("token");
+    navigate("/auth", { replace: true });
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser, tab, setTab }}>
+    <UserContext.Provider value={{ user, setUser, tab, setTab, logout }}>
       {loading === false && children}
     </UserContext.Provider>
   );
