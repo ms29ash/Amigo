@@ -9,6 +9,7 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
+  const [tab, setTab] = useState("chat");
   const navigate = useNavigate();
   const cookies = new Cookies();
   let { pathname } = useLocation();
@@ -50,7 +51,7 @@ const UserProvider = ({ children }) => {
   }, [pathname]);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, tab, setTab }}>
       {loading === false && children}
     </UserContext.Provider>
   );

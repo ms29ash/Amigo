@@ -1,9 +1,9 @@
 import React from "react";
-import TimeDifference from "../../utitlity/TimeDiff";
-import NotificationBadge from "../../utitlity/NotificationBadge";
-import { ChatState } from "../../context/ChatProvider";
-import { getSenderName } from "../../Logics/ChatLogis";
-import { UserState } from "../../context/UserProvider";
+import TimeDifference from "../../../utitlity/TimeDiff";
+import NotificationBadge from "../../../utitlity/NotificationBadge";
+import { ChatState } from "../../../context/ChatProvider";
+import { getSenderName } from "../../../Logics/ChatLogis";
+import { UserState } from "../../../context/UserProvider";
 
 function SingleChat({ chat }) {
   const { setSelectedChat } = ChatState();

@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import SearchBox from "./SearchBox";
-import SingleChat from "./SingleChat";
+import SingleChat from "./tabs/SingleChat";
 import { useQuery } from "@tanstack/react-query";
 import axios from "../../axios";
 import { UserState } from "../../context/UserProvider";
 import SearchResults from "./SearchResults";
+import { AiOutlineSearch } from "react-icons/ai";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import AllChatsHeader from "./AllChatsHeader";
+import ChatTab from "./tabs/ChatTab";
+import SearchTab from "./tabs/SearchTab";
 
 function AllChats() {
-  const { user } = UserState();
-  const [active, setActive] = useState(false);
-  const [keyword, setKeyword] = useState("");
+  const { user, tab, setTab } = UserState();
   const headers = {
     Authorization: `Bearer ${user?.token}`,
   };
@@ -24,58 +27,11 @@ function AllChats() {
     // enabled: headers,
   });
 
-  //Search Chatss
-  const searchChats = () =>
-    axios.get("/user/search", {
-      params: {
-        search: keyword,
-      },
-      headers: headers,
-    });
-
-  const {
-    data: chats,
-    error: chatError,
-    refetch,
-  } = useQuery({
-    queryKey: ["searchedChats"],
-    queryFn: searchChats,
-    enabled: false,
-  });
-
   return (
     <>
-      <div className="flex-1 bg-gray h-screen overflow-y-hidden max-h-screen ">
-        <div className="p-4">
-          <div className="flex justify-between items-center p-4 ">
-            <h1 className="text-2xl font-bold  ">Chats</h1>
-            <BsThreeDots className=" hover:bg-green  hover:text-black cursor-pointer rounded-full p-1 text-3xl" />
-          </div>
-
-          <SearchBox
-            refetch={refetch}
-            keyword={keyword}
-            setKeyword={setKeyword}
-            active={active}
-            setActive={setActive}
-          />
-        </div>
-        <div className="overflow-y-auto overflow-x-hidden h-full w-full pb-48  ">
-          {active ? (
-            <SearchResults
-              data={chats}
-              error={chatError}
-              setKeyword={setKeyword}
-              setActive={setActive}
-            />
-          ) : (
-            <>
-              {data?.data?.chats.map((chat) => {
-                return <SingleChat key={chat._id} chat={chat} />;
-              })}
-            </>
-          )}
-        </div>
+      <div className="flex-1 bg-gray h-screen overflow-y-hidden max-h-screen min-w-[300px] ">
+        <AllChatsHeader />
+        {tab === "chat" ? <ChatTab chats={data?.data?.chats} /> : <SearchTab />}
       </div>
     </>
   );
