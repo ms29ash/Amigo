@@ -3,7 +3,6 @@ import { UserState } from "../../context/UserProvider";
 
 function Msg({ msg }) {
   const { user } = UserState();
-  console.log(msg);
   return (
     <>
       {user._id === msg.sender._id ? (

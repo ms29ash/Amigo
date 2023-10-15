@@ -5,10 +5,11 @@ import { BiSmile } from "react-icons/bi";
 import { FiSend } from "react-icons/fi";
 import axios from "../../axios";
 import { UserState } from "../../context/UserProvider";
+import { ChatState } from "../../context/ChatProvider";
 
-function WriteMsg({ selectedChat }) {
+function WriteMsg({ selectedChat, socket }) {
   const { user } = UserState();
-  const [msg, setMsg] = useState();
+  const [msg, setMsg] = useState("");
 
   const headers = {
     Authorization: `Bearer ${user?.token}`,
@@ -22,19 +23,11 @@ function WriteMsg({ selectedChat }) {
   });
 
   const onSubmit = () => {
-    if (msg !== "") {
-      const data = {
-        chatId: selectedChat._id,
+    if (socket && selectedChat && msg !== "") {
+      socket.emit("newMsg", {
+        token: user?.token,
         content: msg,
-      };
-      mutate(data, {
-        onSuccess: (data) => {
-          console.log(data);
-          setMsg("");
-        },
-        onError: (err) => {
-          console.log(err);
-        },
+        chatId: selectedChat?._id,
       });
     }
   };

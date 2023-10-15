@@ -8,37 +8,42 @@ import { ChatState } from "../../context/ChatProvider";
 function Chat() {
   //Fetching Chats
   const { user } = UserState();
-  const { selectedChat } = ChatState();
+  const { selectedChat, setMessages, messages } = ChatState();
   const headers = {
     Authorization: `Bearer ${user.token}`,
   };
-  const fetchChats = () =>
-    axios.get(`/message/${selectedChat?._id}`, { headers });
+  const fetchMessages = async () => {
+    const data = await axios.get(`/message/${selectedChat?._id}`, { headers });
+    setMessages(data?.data?.messages);
 
-  const { isPending, isError, data, error } = useQuery({
+    return data;
+  };
+
+  const { isError } = useQuery({
     queryKey: ["messages", selectedChat?._id],
-    queryFn: fetchChats,
-    onSuccess: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
+    queryFn: fetchMessages,
     enabled: selectedChat ? true : false,
   });
 
   return (
     <>
-      {
-        <ScrollableFeed
-          className="flex flex-col justify-end w-full "
-          forceScroll={true}
-        >
-          {data?.data?.messages.map((msg) => {
-            return <Msg key={msg._id} msg={msg} />;
-          })}
-        </ScrollableFeed>
-      }
+      {messages && (
+        <div className="w-full justify-end flex items-end overflow-y-hidden">
+          <ScrollableFeed
+            className=" w-full h-fit !max-h-full overflow-y-auto "
+            forceScroll={true}
+          >
+            {messages.map((msg) => {
+              return <Msg key={msg._id} msg={msg} />;
+            })}
+          </ScrollableFeed>
+        </div>
+      )}
+      {isError && (
+        <div className="flex h-full w-full items-center justify-center">
+          <p>Something went wrong</p>
+        </div>
+      )}
     </>
   );
 }
