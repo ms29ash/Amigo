@@ -29,6 +29,7 @@ function WriteMsg({ selectedChat, socket }) {
         content: msg,
         chatId: selectedChat?._id,
       });
+      setMsg("");
     }
   };
 
@@ -42,6 +43,11 @@ function WriteMsg({ selectedChat, socket }) {
         value={msg}
         onChange={(e) => {
           setMsg(e.target.value);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            onSubmit();
+          }
         }}
       />
       <BiSmile className="text-green text-2xl" />

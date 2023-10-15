@@ -4,11 +4,12 @@ import { UserState } from "../../context/UserProvider";
 import axios from "../../axios";
 import { useQuery } from "@tanstack/react-query";
 import { ChatState } from "../../context/ChatProvider";
+import { useEffect } from "react";
 
 function Chat() {
   //Fetching Chats
   const { user } = UserState();
-  const { selectedChat, setMessages, messages } = ChatState();
+  const { selectedChat, setMessages, messages, socket } = ChatState();
   const headers = {
     Authorization: `Bearer ${user.token}`,
   };
@@ -24,6 +25,12 @@ function Chat() {
     queryFn: fetchMessages,
     enabled: selectedChat ? true : false,
   });
+
+  useEffect(() => {
+    socket.on("newMsg", (msg) => {
+      setMessages([...messages, msg]);
+    });
+  }, [messages]);
 
   return (
     <>
