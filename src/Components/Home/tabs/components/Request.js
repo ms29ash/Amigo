@@ -1,4 +1,35 @@
+import { ChatState } from "../../../../context/ChatProvider";
+import { UserState } from "../../../../context/UserProvider";
+
 function Request({ req }) {
+  const { user } = UserState();
+  const { socket } = ChatState();
+
+  const onAccept = () => {
+    let data = {
+      token: user?.token,
+      id: req?.requester._id,
+      chatName: req?.requester.name,
+      reqId: req._id,
+      username: req?.recipient.name,
+    };
+    if (socket) {
+      socket.emit("acceptReq", data);
+    }
+  };
+
+  const onReject = () => {
+    let data = {
+      id: req?.requester._id,
+      username: req?.recipient.name,
+      token: user.token,
+      reqId: req._id,
+    };
+    if (socket) {
+      socket.emit("rejectReq", data);
+    }
+  };
+
   return (
     <div className="flex py-4  items-center px-6 ">
       <img
@@ -17,11 +48,13 @@ function Request({ req }) {
         <div className="flex w-full items-center space-x-2 mt-2">
           <button
             className={`${Btn} bg-green text-black  border-green hover:bg-sgreen   `}
+            onClick={onAccept}
           >
             Accept
           </button>
           <button
             className={`${Btn}  text-white  border-black bg-black hover:bg-gray `}
+            onClick={onReject}
           >
             Reject
           </button>

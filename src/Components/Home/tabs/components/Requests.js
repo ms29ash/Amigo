@@ -25,10 +25,15 @@ function Requests() {
     // enabled: headers,
   });
 
+  //filter requests
+  function filteReq(req) {
+    return req?.recipient._id === user._id;
+  }
+
   return (
     <>
       {requests?.length > 0 ? (
-        requests?.map((req) => {
+        requests?.filter(filteReq).map((req) => {
           return <Request key={req._id} req={req} />;
         })
       ) : (

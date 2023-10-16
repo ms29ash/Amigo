@@ -9,7 +9,7 @@ const ChatContext = createContext();
 
 const ChatProvider = ({ children }) => {
   const [selectedChat, setSelectedChat] = useState();
-  const [chats, setChats] = useState();
+  const [chats, setChats] = useState([]);
   const [messages, setMessages] = useState([]);
   const [requests, setRequests] = useState([]);
   const [notifications, setNotifications] = useState([]);
@@ -26,8 +26,32 @@ const ChatProvider = ({ children }) => {
   useEffect(() => {
     if (socket && user) {
       socket.emit("setup", user._id);
+
       socket.on("newReq", (req) => {
         setRequests([...requests, req]);
+      });
+      socket.on("reqSent", (req) => {
+        setRequests([...requests, req]);
+        console.log("reqSent");
+      });
+
+      socket.on("accecptReq", (chat) => {
+        console.log("req accepted");
+        setChats([...chats, chat.fullChat]);
+        setNotifications([...notifications, chat.newNoti]);
+      });
+
+      socket.on("onAccecptReq", (chat) => {
+        console.log("on accepted");
+        setChats([...chats, chat]);
+      });
+
+      socket.on("rejectReq", (data) => {
+        console.log("rejected");
+        setNotifications([...notifications, data]);
+      });
+      socket.on("onReject", (data) => {
+        console.log("on rejected");
       });
     }
   }, [socket]);
