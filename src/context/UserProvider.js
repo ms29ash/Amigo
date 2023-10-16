@@ -43,7 +43,7 @@ const UserProvider = ({ children }) => {
         fetchUser(token);
       } else {
         setLoading(false);
-        if (pathname !== "/auth") {
+        if (pathname === "/") {
           navigate("/auth", { replace: true });
         }
       }
