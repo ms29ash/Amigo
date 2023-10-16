@@ -4,19 +4,15 @@ import ChatSection from "./ChatSection";
 
 import WriteMsg from "./WriteMsg";
 import { ChatState } from "../../context/ChatProvider";
-import { UserState } from "../../context/UserProvider";
-import { useState } from "react";
 
 function ChatBox() {
-  const { user } = UserState();
-
   // let socket, selectedChatCompare;
 
   const { selectedChat, socket } = ChatState();
 
   useEffect(() => {
     if (selectedChat && socket) {
-      socket.emit("setup", selectedChat?._id);
+      socket.emit("joinChat", selectedChat?._id);
     }
   }, [selectedChat]);
 
