@@ -26,6 +26,9 @@ const ChatProvider = ({ children }) => {
   useEffect(() => {
     if (socket && user) {
       socket.emit("setup", user._id);
+      socket.on("newReq", (req) => {
+        setRequests([...requests, req]);
+      });
     }
   }, [socket]);
 
