@@ -1,9 +1,9 @@
 import React from "react";
-import { AiFillBell } from "react-icons/ai";
 import { UserState } from "../../../../context/UserProvider";
 import { ChatState } from "../../../../context/ChatProvider";
 import axios from "../../../../axios";
 import { useQuery } from "@tanstack/react-query";
+import Notification from "./Notification";
 
 function Notifications() {
   const { user } = UserState();
@@ -42,18 +42,3 @@ function Notifications() {
 }
 
 export default Notifications;
-
-function Notification({ data }) {
-  return (
-    <div>
-      <div className="flex py-4  px-4 space-x-4 items-center">
-        <div className="text-2xl text-green bg-black p-3 rounded-full">
-          <AiFillBell />
-        </div>
-        <div>
-          <p className="opacity-90">{data?.message} </p>
-        </div>
-      </div>
-    </div>
-  );
-}
