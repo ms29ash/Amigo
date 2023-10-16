@@ -3,6 +3,7 @@ import { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import axios from "../axios";
+import { set } from "react-hook-form";
 
 const UserContext = createContext();
 
@@ -52,6 +53,7 @@ const UserProvider = ({ children }) => {
 
   const logout = () => {
     setUser(null);
+    setTab("user");
     cookies.remove("token");
     navigate("/auth", { replace: true });
   };
