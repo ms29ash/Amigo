@@ -7,7 +7,7 @@ import { ChatState } from "../../../context/ChatProvider";
 
 function ChatTab() {
   const { user } = UserState();
-  const { setChats, chats, socket } = ChatState();
+  const { socket, state, dispatch } = ChatState();
   const headers = {
     Authorization: `Bearer ${user?.token}`,
   };
@@ -15,7 +15,7 @@ function ChatTab() {
   //Fetching Chats
   const fetchChats = async () => {
     const data = await axios.get("/chat/chats", { headers });
-    setChats(data?.data?.chats);
+    dispatch({ type: "setChats", payload: data?.data?.chats });
     return data;
   };
 
@@ -36,8 +36,8 @@ function ChatTab() {
 
   return (
     <div className="overflow-y-auto overflow-x-hidden h-full w-full pb-48  ">
-      {chats &&
-        chats.map((chat) => {
+      {state.chats &&
+        state.chats.map((chat) => {
           return <SingleChat key={chat._id} chat={chat} />;
         })}
     </div>

@@ -9,38 +9,42 @@ import { useEffect } from "react";
 function Chat() {
   //Fetching Chats
   const { user } = UserState();
-  const { selectedChat, setMessages, messages, socket } = ChatState();
+  const { state, dispatch, socket } = ChatState();
   const headers = {
     Authorization: `Bearer ${user.token}`,
   };
   const fetchMessages = async () => {
-    const data = await axios.get(`/message/${selectedChat?._id}`, { headers });
-    setMessages(data?.data?.messages);
+    const data = await axios.get(`/message/${state.selectedChat?._id}`, {
+      headers,
+    });
+    dispatch({ type: "setMsg", payload: data?.data?.messages });
 
     return data;
   };
 
   const { isError } = useQuery({
-    queryKey: ["messages", selectedChat?._id],
+    queryKey: ["messages", state.selectedChat?._id],
     queryFn: fetchMessages,
-    enabled: selectedChat ? true : false,
+    enabled: state.selectedChat ? true : false,
   });
 
   useEffect(() => {
-    socket.on("newMsg", (msg) => {
-      setMessages([...messages, msg]);
-    });
-  }, [messages]);
+    if (socket) {
+      socket.on("newMsg", (msg) => {
+        dispatch({ type: "addMsg", payload: msg });
+      });
+    }
+  }, [socket?.message]);
 
   return (
     <>
-      {messages && (
+      {state.messages && (
         <div className="w-full justify-end flex items-end overflow-y-hidden">
           <ScrollableFeed
             className=" w-full h-fit !max-h-full overflow-y-auto "
             forceScroll={true}
           >
-            {messages.map((msg) => {
+            {state.messages.map((msg) => {
               return <Msg key={msg._id} msg={msg} />;
             })}
           </ScrollableFeed>

@@ -8,23 +8,25 @@ import { ChatState } from "../../context/ChatProvider";
 function ChatBox() {
   // let socket, selectedChatCompare;
 
-  const { selectedChat, socket } = ChatState();
+  const { state, socket } = ChatState();
 
   useEffect(() => {
-    if (selectedChat && socket) {
-      socket.emit("joinChat", selectedChat?._id);
+    if (state.selectedChat && socket) {
+      socket.emit("joinChat", state.selectedChat?._id);
     }
-  }, [selectedChat]);
+  }, [state.selectedChat]);
 
   return (
     <>
-      {selectedChat ? (
+      {state.selectedChat ? (
         <div className="flex-[3_3_0%] w-full h-screen max-h-screen  overflow-y-hidden flex flex-col ">
-          <ChatBoxHeader selectedChat={selectedChat} />
+          <ChatBoxHeader selectedChat={state.selectedChat} />
           <div className="flex-1 flex  overflow-y-auto">
             <ChatSection />
           </div>
-          {socket && <WriteMsg socket={socket} selectedChat={selectedChat} />}
+          {socket && (
+            <WriteMsg socket={socket} selectedChat={state.selectedChat} />
+          )}
         </div>
       ) : (
         <div className="flex-[3_3_0%] w-full h-screen max-h-screen  overflow-y-hidden flex flex-col"></div>

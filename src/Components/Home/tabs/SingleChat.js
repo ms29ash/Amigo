@@ -6,13 +6,13 @@ import { getSenderName } from "../../../Logics/ChatLogis";
 import { UserState } from "../../../context/UserProvider";
 
 function SingleChat({ chat }) {
-  const { setSelectedChat } = ChatState();
+  const { dispatch } = ChatState();
   const { user } = UserState();
   return (
     <>
       <div
         onClick={() => {
-          setSelectedChat(chat);
+          dispatch({ type: "selectChat", payload: chat });
         }}
         className="flex   cursor-pointer hover:text-black px-4 py-3 hover:bg-green  items-center group w-full relative  max-w-full"
       >

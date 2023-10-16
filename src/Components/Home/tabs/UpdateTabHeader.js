@@ -4,9 +4,12 @@ import { HiOutlineUserCircle } from "react-icons/hi";
 import tw from "tailwind-styled-components";
 import { ChatState } from "../../../context/ChatProvider";
 import NotificationBadge from "../../../utitlity/NotificationBadge";
+import reqFilter from "../../../Logics/ReqLogics";
+import { UserState } from "../../../context/UserProvider";
 
 function UpdateTabHeader({ selected, setSelected }) {
-  const { requests, notifications } = ChatState();
+  const { state } = ChatState();
+  const { user } = UserState();
   return (
     <>
       <div className="flex px-[5%] ">
@@ -17,7 +20,7 @@ function UpdateTabHeader({ selected, setSelected }) {
           <HiOutlineUserCircle />
           <NotificationBadge
             classes="bg-green absolute right-3 text-black -top-2 "
-            count={requests?.length}
+            count={state.requests?.filter((req) => reqFilter(req, user)).length}
           />
         </Opt>
         <Opt
@@ -27,7 +30,7 @@ function UpdateTabHeader({ selected, setSelected }) {
           <IoMdNotificationsOutline />
           <NotificationBadge
             classes="bg-green relative right-3 text-black -top-2 "
-            count={notifications?.length}
+            count={state.notifications?.length}
           />
         </Opt>
       </div>

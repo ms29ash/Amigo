@@ -7,10 +7,12 @@ import { UserState } from "../../context/UserProvider";
 import tw from "tailwind-styled-components";
 import { ChatState } from "../../context/ChatProvider";
 import NotificationBadge from "../../utitlity/NotificationBadge";
+import reqFilter from "../../Logics/ReqLogics";
 
 function AllTabsHeader() {
   const { logout, tab, setTab } = UserState();
-  const { requests, notifications } = ChatState();
+  const { state } = ChatState();
+  const { user } = UserState();
   return (
     <div className="py-4">
       <div className="flex justify-between items-center p-4 ">
@@ -35,7 +37,10 @@ function AllTabsHeader() {
             />
             <NotificationBadge
               classes="bg-green absolute -right-1 text-black -top-1 "
-              count={requests?.length + notifications?.length}
+              count={
+                state.requests?.filter((req) => reqFilter(req, user)).length +
+                state.notifications?.length
+              }
             />
           </div>
           <div className="relative group">
