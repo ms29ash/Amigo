@@ -14,23 +14,23 @@ function Notifications() {
   };
 
   //Fetching Chats
-  const fetchChats = async () => {
+  const fetchNotifications = async () => {
     const data = await axios.get("/updates/notifications", { headers });
     setNotifications(data?.data?.notifications);
     return data;
   };
 
   const { data } = useQuery({
-    queryKey: ["chats"],
-    queryFn: fetchChats,
+    queryKey: ["notifications"],
+    queryFn: fetchNotifications,
     // enabled: headers,
   });
 
   return (
     <>
       {notifications?.length > 0 ? (
-        notifications?.map((i, n) => {
-          return <Notification key={n} />;
+        notifications?.map((n) => {
+          return <Notification key={n._id} data={n} />;
         })
       ) : (
         <div className="w-full flex justify-center py-[50%]">
@@ -43,7 +43,7 @@ function Notifications() {
 
 export default Notifications;
 
-function Notification() {
+function Notification({ data }) {
   return (
     <div>
       <div className="flex py-4  px-4 space-x-4 items-center">
@@ -51,7 +51,7 @@ function Notification() {
           <AiFillBell />
         </div>
         <div>
-          <p className="opacity-90">John doe sent you a request </p>
+          <p className="opacity-90">{data?.message} </p>
         </div>
       </div>
     </div>
