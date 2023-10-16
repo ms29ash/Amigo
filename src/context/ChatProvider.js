@@ -3,13 +3,17 @@
 import React, { useState, useContext, createContext } from "react";
 import { useEffect } from "react";
 import io from "socket.io-client";
+import { UserState } from "./UserProvider";
+
 const ChatContext = createContext();
 
 const ChatProvider = ({ children }) => {
   const [selectedChat, setSelectedChat] = useState();
+  const [chats, setChats] = useState();
   const [messages, setMessages] = useState([]);
-
   const [socket, setSocket] = useState();
+
+  const { user } = UserState();
 
   const ENDPOINT = process.env.ENDPOINT || "http://localhost:4000";
   useEffect(() => {
@@ -17,9 +21,23 @@ const ChatProvider = ({ children }) => {
     setSocket(newSocket);
   }, []);
 
+  useEffect(() => {
+    if (socket && user) {
+      socket.emit("setup", user._id);
+    }
+  }, [socket]);
+
   return (
     <ChatContext.Provider
-      value={{ socket, selectedChat, setSelectedChat, messages, setMessages }}
+      value={{
+        socket,
+        selectedChat,
+        setSelectedChat,
+        messages,
+        setMessages,
+        chats,
+        setChats,
+      }}
     >
       {children}
     </ChatContext.Provider>
