@@ -48,7 +48,7 @@ function SearchTab() {
           <p className="px-6 opacity-80">{`You Searched ${keyword} `}</p>
         )}
       </div>
-      <div className="overflow-y-auto overflow-x-hidden h-full w-full pb-48  ">
+      <div className="overflow-y-auto overflow-x-hidden h-full max-h-screen w-full pb-48  ">
         {data?.data &&
           data?.data.map((user) => (
             <SearchUser key={user._id} data={user} setKeyword={setKeyword} />

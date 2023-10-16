@@ -1,7 +1,8 @@
 import React from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
-import { IoMdArrowBack, IoMdNotificationsOutline } from "react-icons/io";
+import { HiOutlineMailOpen } from "react-icons/hi";
+import { IoMdArrowBack } from "react-icons/io";
 import { UserState } from "../../context/UserProvider";
 import tw from "tailwind-styled-components";
 
@@ -17,16 +18,16 @@ function AllTabsHeader() {
               onClick={() => setTab("chat")}
             />
           )}
-          <h1 className="text-2xl font-bold capitalize  ">{tab}</h1>
+          <h1 className="text-xl font-bold capitalize  ">{tab}</h1>
         </div>
         <div className="flex items-center space-x-2">
           <AiOutlineSearch
             className=" hover:bg-green  hover:text-black cursor-pointer rounded-full p-1 text-3xl"
             onClick={() => setTab("search")}
           />
-          <IoMdNotificationsOutline
+          <HiOutlineMailOpen
             className=" hover:bg-green  hover:text-black cursor-pointer rounded-full p-1 text-3xl"
-            onClick={() => setTab("notification")}
+            onClick={() => setTab("updates")}
           />
           <div className="relative group">
             <BsThreeDots className="rotate-90 hover:bg-green  hover:text-black cursor-pointer rounded-full p-1 text-3xl " />

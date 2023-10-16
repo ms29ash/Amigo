@@ -11,6 +11,8 @@ const ChatProvider = ({ children }) => {
   const [selectedChat, setSelectedChat] = useState();
   const [chats, setChats] = useState();
   const [messages, setMessages] = useState([]);
+  const [requests, setRequests] = useState([]);
+  const [notifications, setNotifications] = useState([]);
   const [socket, setSocket] = useState();
 
   const { user } = UserState();
@@ -37,6 +39,10 @@ const ChatProvider = ({ children }) => {
         setMessages,
         chats,
         setChats,
+        requests,
+        setRequests,
+        notifications,
+        setNotifications,
       }}
     >
       {children}

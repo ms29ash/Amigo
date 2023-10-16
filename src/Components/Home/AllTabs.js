@@ -3,6 +3,7 @@ import AllTabsHeader from "./AllTabsHeader";
 import ChatTab from "./tabs/ChatTab";
 import ProfileTab from "./tabs/ProfileTab";
 import SearchTab from "./tabs/SearchTab";
+import UpdateTab from "./tabs/UpdateTab";
 
 function AllTabs() {
   const { tab } = UserState();
@@ -17,6 +18,8 @@ function AllTabs() {
           <SearchTab />
         ) : tab === "profile" ? (
           <ProfileTab />
+        ) : tab === "updates" ? (
+          <UpdateTab />
         ) : (
           ""
         )}
