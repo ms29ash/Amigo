@@ -1,8 +1,10 @@
 import React from "react";
 import { UserState } from "../../../context/UserProvider";
+import { ChatState } from "../../../context/ChatProvider";
 
 function ProfileTab() {
-  const { user, logout } = UserState();
+  const { user } = UserState();
+  const { logout } = ChatState();
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-around ">

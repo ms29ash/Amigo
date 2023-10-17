@@ -10,8 +10,8 @@ import NotificationBadge from "../../utitlity/NotificationBadge";
 import reqFilter from "../../Logics/ReqLogics";
 
 function AllTabsHeader() {
-  const { logout, tab, setTab } = UserState();
-  const { state } = ChatState();
+  const { tab, setTab } = UserState();
+  const { state, logout } = ChatState();
   const { user } = UserState();
   return (
     <div className="py-4">

@@ -6,6 +6,8 @@ import io from "socket.io-client";
 import { UserState } from "./UserProvider";
 import { produce } from "immer";
 import axios from "../axios";
+import Cookies from "universal-cookie";
+import { useNavigate } from "react-router-dom";
 
 const ChatContext = createContext();
 
@@ -54,6 +56,9 @@ const reducer = (draft, action) => {
     case "addReq":
       draft.requests.push(action.payload);
       break;
+    case "reset":
+      draft = initialState;
+      break;
 
     default:
       return;
@@ -64,8 +69,12 @@ const ChatProvider = ({ children }) => {
   const [socket, setSocket] = useState();
   const [state, dispatch] = useReducer(produce(reducer), initialState);
 
-  const { user } = UserState();
+  const { user, setUser, setTab } = UserState();
 
+  const navigate = useNavigate();
+  const cookies = new Cookies();
+
+  //Socket and socket listeners
   const ENDPOINT = process.env.ENDPOINT || "http://localhost:4000";
   useEffect(() => {
     let newSocket = io(ENDPOINT);
@@ -140,12 +149,23 @@ const ChatProvider = ({ children }) => {
     fetchReq();
   }, []);
 
+  //Logout user
+  const logout = () => {
+    dispatch({ type: "reset" });
+    setUser(null);
+    setTab("user");
+    cookies.remove("token");
+
+    navigate("/auth", { replace: true });
+  };
+
   return (
     <ChatContext.Provider
       value={{
         socket,
         dispatch,
         state,
+        logout,
       }}
     >
       {children}
