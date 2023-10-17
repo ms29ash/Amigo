@@ -77,6 +77,11 @@ const ChatProvider = ({ children }) => {
       //setup socket
       socket.emit("setup", user._id);
 
+      //message listener
+      socket.on("newMsg", (msg) => {
+        dispatch({ type: "addMsg", payload: msg });
+      });
+
       //request listener
       socket.on("newReq", (req) => {
         dispatch({ type: "addReq", payload: req });

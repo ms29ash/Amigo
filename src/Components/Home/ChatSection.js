@@ -25,16 +25,8 @@ function Chat() {
   const { isError } = useQuery({
     queryKey: ["messages", state.selectedChat?._id],
     queryFn: fetchMessages,
-    enabled: state.selectedChat ? true : false,
+    enabled: state.selectedChat._id ? true : false,
   });
-
-  useEffect(() => {
-    if (socket) {
-      socket.on("newMsg", (msg) => {
-        dispatch({ type: "addMsg", payload: msg });
-      });
-    }
-  }, [socket?.message]);
 
   return (
     <>
