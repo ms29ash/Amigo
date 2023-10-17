@@ -5,10 +5,14 @@ import axios from "../../../axios";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { UserState } from "../../../context/UserProvider";
+import { searchFilter } from "../../../Logics/ReqLogics";
+import { ChatState } from "../../../context/ChatProvider";
+import { useEffect } from "react";
 
 function SearchTab() {
   const [keyword, setKeyword] = useState("");
   const { user, tab, setTab } = UserState();
+  const { state } = ChatState();
   const [active, setActive] = useState(false);
   const headers = {
     Authorization: `Bearer ${user?.token}`,
@@ -50,9 +54,11 @@ function SearchTab() {
       </div>
       <div className="overflow-y-auto overflow-x-hidden h-full max-h-screen w-full pb-48  ">
         {data?.data &&
-          data?.data.map((user) => (
-            <SearchUser key={user._id} data={user} setKeyword={setKeyword} />
-          ))}
+          data?.data
+            .filter((user) => searchFilter(state.chats, user))
+            .map((user) => (
+              <SearchUser key={user._id} data={user} setKeyword={setKeyword} />
+            ))}
       </div>
     </div>
   );
