@@ -1,6 +1,9 @@
 import { BsThreeDots } from "react-icons/bs";
+import { getSenderName } from "../../Logics/ChatLogis";
+import { UserState } from "../../context/UserProvider";
 
 function ChatBoxHeader({ selectedChat }) {
+  const { user } = UserState();
   return (
     <div className="bg-lightGray px-6 ">
       <div className="flex items-center justify-between">
@@ -12,7 +15,7 @@ function ChatBoxHeader({ selectedChat }) {
           />
           <div className="flex-1">
             <h2 className="font-bold text-xl flex-1 whitespace-nowrap capitalize ">
-              {selectedChat?.chatName}
+              {getSenderName(selectedChat?.users, user)}
             </h2>
             <p className="flex-1 opacity-80 ">offline</p>
           </div>
