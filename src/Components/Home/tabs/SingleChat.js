@@ -37,7 +37,7 @@ function SingleChat({ chat }) {
             <p className="text-xs">
               {chat.latestMsg && (
                 <>
-                  <TimeDifference date={chat?.latestMsg?.updatedAt} /> ago
+                  <TimeDifference date={chat?.latestMsg?.updatedAt} />
                 </>
               )}
             </p>
