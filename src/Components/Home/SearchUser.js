@@ -52,7 +52,7 @@ function SearchUser({ data, setKeyword, setActive }) {
 
   useEffect(() => {
     setStatus(checkStatus(state.chats, state.requests, data));
-  }, []);
+  }, [state]);
   return (
     <>
       {
@@ -87,13 +87,6 @@ function SearchUser({ data, setKeyword, setActive }) {
               connect
             </button>
           )}
-          {/* <button
-        onClick={onChatHandler}
-        className="bg-green hover:bg-sgreen text-black text-xs font-bold rounded-md px-2 py-1"
-      >
-        {checkStatus(state.chats, state.requests, data)}
-      </button> */}
-          {/* <p className="">{checkStatus(state.chats, state.requests, data)}</p> */}
         </div>
       }
     </>
