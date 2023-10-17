@@ -56,6 +56,12 @@ const reducer = (draft, action) => {
     case "addReq":
       draft.requests.push(action.payload);
       break;
+    case "removeReq":
+      let index = draft.requests.findIndex((e) => e._id === action.payload);
+      if (index !== -1) {
+        draft.requests.splice(index, 1);
+      }
+      break;
     case "reset":
       draft = initialState;
       break;
@@ -102,23 +108,24 @@ const ChatProvider = ({ children }) => {
 
       //acceptReq listener
       socket.on("accecptReq", (chat) => {
-        console.log("req accepted");
         dispatch({ type: "addChat", payload: chat.fullChat });
         dispatch({ type: "addNotifications", payload: chat.newNoti });
+        dispatch({ type: "removeReq", payload: chat.reqId });
       });
 
       socket.on("onAccecptReq", (chat) => {
-        console.log("on accepted");
-        dispatch({ type: "addChat", payload: chat });
+        dispatch({ type: "addChat", payload: chat.fullChat });
+        dispatch({ type: "removeReq", payload: chat.reqId });
       });
 
       //rejectReq listener
       socket.on("rejectReq", (data) => {
         console.log("rejected");
-        dispatch({ type: "addNotifications", payload: data });
+        dispatch({ type: "addNotifications", payload: data?.newNoti });
+        dispatch({ type: "removeReq", payload: data.reqId });
       });
       socket.on("onReject", (data) => {
-        console.log("on rejected");
+        dispatch({ type: "removeReq", payload: data.reqId });
       });
     }
   }, [socket]);
@@ -153,7 +160,7 @@ const ChatProvider = ({ children }) => {
   const logout = () => {
     dispatch({ type: "reset" });
     setUser(null);
-    setTab("user");
+    setTab("chat");
     cookies.remove("token");
 
     navigate("/auth", { replace: true });
