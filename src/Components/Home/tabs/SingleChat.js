@@ -4,6 +4,7 @@ import NotificationBadge from "../../../utitlity/NotificationBadge";
 import { ChatState } from "../../../context/ChatProvider";
 import { getSenderName } from "../../../Logics/ChatLogis";
 import { UserState } from "../../../context/UserProvider";
+import moment from "moment";
 
 function SingleChat({ chat }) {
   const { dispatch } = ChatState();
@@ -23,9 +24,8 @@ function SingleChat({ chat }) {
         />
 
         <div className=" relative w-[70%] flex flex-row items-center ">
-          <div className="  flex  w-[70%]    flex-col  justify-between overflow-x-hidden ">
-            <h2 className="font-bold text-xl whitespace-nowrap capitalize ">
-              {/* {chat.chatName} */}
+          <div className="  flex  w-[50%]    flex-col  justify-between overflow-x-hidden ">
+            <h2 className="font-bold text-xl whitespace-nowrap capitalize truncate">
               {getSenderName(chat?.users, user)}
             </h2>
 
@@ -34,11 +34,9 @@ function SingleChat({ chat }) {
           <div className=" right-0 top-0 bottom-0 absolute flex flex-col items-end  justify-center text-sm  w-[30%] z-10  ">
             <NotificationBadge classes="bg-green text-black mb-4" count={3} />
 
-            <p className="text-xs">
+            <p className="text-[0.8rem] break-keep whitespace-nowrap ">
               {chat.latestMsg && (
-                <>
-                  <TimeDifference date={chat?.latestMsg?.updatedAt} />
-                </>
+                <>{moment(chat.latestMsg.updatedAt).fromNow()}</>
               )}
             </p>
           </div>

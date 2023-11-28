@@ -1,22 +1,24 @@
 import tw from "tailwind-styled-components";
 import { UserState } from "../../context/UserProvider";
+import moment from "moment/moment";
 
 function Msg({ msg }) {
   const { user } = UserState();
+  console.log(msg);
   return (
     <>
       {user._id === msg.sender._id ? (
         <SendContainer $type={true}>
           <SendWrapper $type={true}>
             <Text>{msg?.content}</Text>
-            <Small>2:00 pm</Small>
+            <Small>{moment(msg?.updatedAt).format(" h:mm a")}</Small>
           </SendWrapper>
         </SendContainer>
       ) : (
         <ReceiveContainer $type={true}>
           <ReceiveWrapper $type={true}>
             <Text>{msg?.content}</Text>
-            <Small>2:00 pm</Small>
+            <Small>{moment(msg?.updatedAt).format(" h:mm a")}</Small>
           </ReceiveWrapper>
         </ReceiveContainer>
       )}
